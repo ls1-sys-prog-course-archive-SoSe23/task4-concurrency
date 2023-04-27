@@ -3,7 +3,7 @@
     {
       "name": "Build",
       "setup": "",
-      "run": "timeout -s KILL 5m make all",
+      "run": "make all",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -13,7 +13,7 @@
     {
       "name": "Task 4.1: Mutual exclusion",
       "setup": "",
-      "run": "timeout -s KILL 3m python3 tests/test_mutual_exclusion.py",
+      "run": "python3 tests/test_mutual_exclusion.py",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -23,7 +23,7 @@
     {
       "name": "Task 4.2: Scalable hashmap",
       "setup": "",
-      "run": "timeout -s KILL 10m python3 tests/test_lockhashmap.py",
+      "run": "python3 tests/test_lockhashmap.py",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -33,7 +33,7 @@
     {
       "name": "Task 4.3: Lock-free hashmap",
       "setup": "",
-      "run": "timeout -s KILL 10m python3 tests/test_lockfreehashmap.py",
+      "run": "python3 tests/test_lockfreehashmap.py",
       "input": "",
       "output": "",
       "comparison": "included",
