@@ -12,6 +12,7 @@ from testsupport import (
     ensure_library,
 )
 
+
 def sanity_check(output, n_buckets, initial, n_threads):
     count = 0
     for i in range(0, n_buckets):
@@ -21,11 +22,14 @@ def sanity_check(output, n_buckets, initial, n_threads):
         warn("Hashmap has more items than expected ")
         exit(1)
 
+
 def main() -> None:
     # Run the test program
-    lib = ensure_library("liblockhashmap.so")
+    # lib = ensure_library("liblockhashmap.so")
+    lib = ensure_library("libhashmap.so")
+
     extra_env = {"LD_LIBRARY_PATH": str(os.path.dirname(lib))}
-    test_lock_hashmap = test_root().joinpath("lock_hashmap")
+    test_lock_hashmap = test_root().joinpath("test_lockhashmap")
     if not test_lock_hashmap.exists():
         run(["make", "-C", str(test_root()), str(test_lock_hashmap)])
     times = []
@@ -87,6 +91,25 @@ def main() -> None:
         if f1 < 1.4 or f2 < 1.4:
             warn("Hashmap is not scaling properly: " + str(times))
             exit(1)
+        with subtest("Checking if hashmap cleans up items when removing"):
+            test_cleanup_lock = test_root().joinpath("test_cleanup_lock")
+
+            if not test_cleanup_lock.exists():
+                run(["make", "-C", str(test_root()), str(test_cleanup_lock)])
+
+            with open(f"{tmpdir}/stdout", "w+") as stdout:
+                run_project_executable(str(test_cleanup_lock), stdout=stdout)
+
+                stdout.seek(0)
+                lines = stdout.readlines()
+                first = float(lines[0])
+                second = float(lines[1])
+
+                if second / first > 1.5:
+                    warn(
+                        f"Hashmap does not cleanup properly when removing items: {first}, {second}"
+                    )
+                    exit(1)
 
 
 if __name__ == "__main__":

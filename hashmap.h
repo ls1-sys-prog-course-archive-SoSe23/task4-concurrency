@@ -1,39 +1,60 @@
 #include <stddef.h>
+#include "linkedlist.h"
 
 #define PAD 64
 
+typedef struct Node_HM_t
+{
+    long m_val; //value of the node
+    char padding[PAD];
+    struct Node_HM_t* m_next; //pointer to next node in the bucket
+} Node_HM;
+
+typedef struct hm_t
+{
+  	int n_buckets;
+    List** buckets; //list of buckets in the hashmap
+} HM;
+
 /*
-Hashmap: list of buckets
-bucket1 -> sentinel -> node1 -> node2 -> NULL
-bucket2 -> sentinel -> node3 -> NULL
-...
-bucketN -> sentinel -> NULL
-*/
+//Hashmap: list of buckets
+//bucket1 -> sentinel -> node1 -> node2 -> NULL
+//bucket2 -> sentinel -> node3 -> NULL
+//...
+//bucketN -> sentinel -> NULL
 
 //define a node in the hashmap
-/*typedef struct Node_HM_t
+typedef struct Node_HM_t
 {
 	long m_val; //value of the node
 	char padding[PAD];
 	struct Node_HM_t* m_next; //pointer to next node in the bucket
-} Node_HM;*/
-typedef struct Node_HM_t Node_HM;
+} Node_HM;
+//typedef struct Node_HM_t Node_HM;
 
-/*defining a bucket in the hashmap
+
+typedef struct HM_T
+{
+    int n_buckets;
+    List **buckets; // list of buckets in the hashmap
+} HM;
+
+defining a bucket in the hashmap
 typedef struct List_t
 {
 	Node_HM* sentinel; //list of nodes in a bucket
 } List;
-*/
+
 typedef struct List_t List;
 
-/*defining the hashmap
+defining the hashmap
 typedef struct hm_t
 {
         List** buckets; //list of buckets in the hashmap
 } HM;
-*/
+
 typedef struct hm_t HM;
+*/
 
 //allocate a hashmap with given number of buckets
 HM* alloc_hashmap(size_t n_buckets);
@@ -49,7 +70,7 @@ int insert_item(HM* hm, long val);
 //return 1 if item is not found
 int remove_item(HM* hm, long val);
 
-//check if val exists in hm, return 0 if found, return 1 otherwise
+//check if val exists in hm, return 1 if found, return 0 otherwise
 int lookup_item(HM* hm, long val);
 
 //print all elements in the hashmap as follows:

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "chashmap.h"
+#include "hashmap.h"
 #include "timer.h"
 
 /* Items inserted / removed from the hashmap */
