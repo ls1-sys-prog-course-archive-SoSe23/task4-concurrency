@@ -8,24 +8,24 @@ CARGO ?= cargo
 RUSTFLAGS ?= -g
 
 # this target should build all executables for all tests
-all:
-	@echo "Please set a concrete build command here"
-	false
+#all:
+#	@echo "Please set a concrete build command here"
+#	false
 
-.PHONY: all clean check
+.PHONY: clean check
 
 ## Rust Example
 #all:
 #	cargo build
 
-## C/C++ example
-#all: libcspinlock.so liblockhashmap.so liblockfreehashmap.so
-#libcspinlock.so: cspinlock.c
-#	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
-#
+# C/C++ example
+all: libcspinlock.so #liblockhashmap.so liblockfreehashmap.so
+libcspinlock.so: cspinlock.c
+	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
+
 #liblockhashmap.so: lockhashmap.c
 #	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
-#
+
 #liblockfreehashmap.so: lockfreehashmap.c
 #	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
 
