@@ -19,12 +19,12 @@ RUSTFLAGS ?= -g
 #	cargo build
 
 # C/C++ example
-all: libcspinlock.so #liblockhashmap.so liblockfreehashmap.so
+all: libcspinlock.so liblockhashmap.so liblockfreehashmap.so
 libcspinlock.so: cspinlock.c
 	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
 
-#liblockhashmap.so: lockhashmap.c
-#	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
+liblockhashmap.so: lockhashmap.c
+	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
 
 #liblockfreehashmap.so: lockfreehashmap.c
 #	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
