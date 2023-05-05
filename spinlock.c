@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "cspinlock.h"
+#include "spinlock.h"
 
 typedef struct cspinlock{
   //define your locking structure here

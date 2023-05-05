@@ -1,9 +1,9 @@
 # Set you prefererred CFLAGS/compiler compiler here.
 # Our github runner provides gcc-10 by default.
 CC ?= cc
-CFLAGS ?= -g -Wall -O2
+CFLAGS ?= -g -Wall
 CXX ?= c++
-CXXFLAGS ?= -g -Wall -O2
+CXXFLAGS ?= -g -Wall
 CARGO ?= cargo
 RUSTFLAGS ?= -g
 
@@ -19,11 +19,14 @@ RUSTFLAGS ?= -g
 #	cargo build
 
 # C/C++ example
-all: libcspinlock.so liblockhashmap.so liblockfreehashmap.so
-libcspinlock.so: cspinlock.c
+all: libspinlock.so liblocklinkedlist.so liblockhashmap.so liblockfreehashmap.so
+libspinlock.so: spinlock.c
 	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
 
 liblockhashmap.so: lockhashmap.c
+	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
+
+liblocklinkedlist.so: locklinkedlist.c
 	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
 
 #liblockfreehashmap.so: lockfreehashmap.c

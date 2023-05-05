@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "cspinlock.h"
+#include "spinlock.h"
 
 const int NUM_THREADS = 4;
 const long ITERATIONS = 1000000;

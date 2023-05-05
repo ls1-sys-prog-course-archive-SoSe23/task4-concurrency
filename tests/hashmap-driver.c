@@ -9,7 +9,7 @@
 #include "timer.h"
 #include "thread.h"
 
-#include "chashmap.h"
+#include "hashmap.h"
 
 
 #define DEFAULT_DURATION                10000
