@@ -12,6 +12,7 @@ from testsupport import (
     ensure_library,
 )
 
+
 def sanity_check(output, n_buckets, initial, n_threads):
     count = 0
     for i in range(0, n_buckets):
@@ -21,11 +22,14 @@ def sanity_check(output, n_buckets, initial, n_threads):
         warn("Hashmap has more items than expected ")
         exit(1)
 
+
 def main() -> None:
     # Run the test program
-    lib = ensure_library("liblockhashmap.so")
+    # lib = ensure_library("liblockhashmap.so")
+    lib = ensure_library("libhashmap.so")
+
     extra_env = {"LD_LIBRARY_PATH": str(os.path.dirname(lib))}
-    test_lock_hashmap = test_root().joinpath("lock_hashmap")
+    test_lock_hashmap = test_root().joinpath("test_lockhashmap")
     if not test_lock_hashmap.exists():
         run(["make", "-C", str(test_root()), str(test_lock_hashmap)])
     times = []

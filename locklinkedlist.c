@@ -3,7 +3,6 @@
 #include <limits.h>
 #include "hashmap.h"
 #include "spinlock.h"
-#include "locklinkedlist.h"
 
 /*
 typedef struct Node_t
@@ -79,7 +78,7 @@ int lookup_val(List* list, long val)
     found = ((curr != NULL) && (curr->val == val));
     cspin_unlock(list->lock);
     //set->lock = 0;
-    return found;
+    return !found;
 }
 
 List* alloc_list()

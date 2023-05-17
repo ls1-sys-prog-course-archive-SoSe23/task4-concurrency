@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-#include "chashmap.h"
+#include <hashmap.h>
 #include "timer.h"
 
 /* Items inserted / removed from the hashmap */
@@ -12,8 +11,8 @@ const int NUM_ITEMS = 100000;
 const int NUM_LOOKUPS = 10000;
 
 /* Quick validation of the hashmap */
-void validate(HM *hm) {
-    int num = rand();
+void validate(HM* hm) {
+    long num = rand();
 
     if (lookup_item(hm, num) == 0) {
         fprintf(stderr, "Hashmap found item %d when it was not present\n", num);

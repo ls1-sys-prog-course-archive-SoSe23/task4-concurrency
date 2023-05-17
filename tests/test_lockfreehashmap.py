@@ -12,6 +12,7 @@ from testsupport import (
     ensure_library,
 )
 
+
 def sanity_check(output, n_buckets, initial, n_threads):
     count = 0
     for i in range(0, n_buckets):
@@ -21,9 +22,10 @@ def sanity_check(output, n_buckets, initial, n_threads):
         warn("Hashmap has more items than expected ")
         exit(1)
 
+
 def main() -> None:
     # Run the test program
-    test_lock_hashmap = test_root().joinpath("lockfree_hashmap")
+    test_lock_hashmap = test_root().joinpath("test_lockfreehashmap")
     if not test_lock_hashmap.exists():
         run(["make", "-C", str(test_root()), str(test_lock_hashmap)])
     times = []
@@ -90,10 +92,7 @@ def main() -> None:
                 run(["make", "-C", str(test_root()), str(test_cleanup_lockfree)])
 
             with open(f"{tmpdir}/stdout", "w+") as stdout:
-                run_project_executable(
-                    str(test_cleanup_lockfree),
-                    stdout=stdout
-                )
+                run_project_executable(str(test_cleanup_lockfree), stdout=stdout)
 
                 stdout.seek(0)
                 lines = stdout.readlines()
@@ -101,9 +100,10 @@ def main() -> None:
                 second = float(lines[1])
 
                 if second / first > 1.5:
-                    warn(f"Hashmap does not cleanup properly when removing items: {first}, {second}")
+                    warn(
+                        f"Hashmap does not cleanup properly when removing items: {first}, {second}"
+                    )
                     exit(1)
-                 
 
 
 if __name__ == "__main__":

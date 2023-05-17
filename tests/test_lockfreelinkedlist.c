@@ -46,8 +46,7 @@ void* thread_func_inserts(struct thread_args* args)
     for (int i = start_node; i < end_node; i++)
     {
         insert_val(list, i);
-        //insert sleep here?
-        sleep(0.01);
+        sleep(0.1);
     }
     return NULL;
 }

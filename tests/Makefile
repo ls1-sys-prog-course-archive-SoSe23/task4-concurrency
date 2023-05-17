@@ -9,45 +9,53 @@ CPPFLAGS += $(CFLAGS)
 
 PROG1 := ${ROOT_DIR}/test_mutual_exclusion
 PROG2 := ${ROOT_DIR}/test_locklinkedlist
-#PROG3 := ${ROOT_DIR}/lock_hashmap
-#PROG4 := ${ROOT_DIR}/lockfree_hashmap
+PROG3 := ${ROOT_DIR}/test_lockfreelinkedlist
+PROG4 := ${ROOT_DIR}/test_lockhashmap
+PROG5 := ${ROOT_DIR}/test_lockfreehashmap
 #PROG5 := ${ROOT_DIR}/test_cleanup_lock
 #PROG6 := ${ROOT_DIR}/test_cleanup_lockfree
 
-OBJS := ${SRCS:.c=.o}
+OBJS := ${SRCS:.c=.so}
 
 LIBS = -Wl,-rpath,${ROOT_DIR}/.. -L ${ROOT_DIR}/.. -Wl,-rpath,${ROOT_DIR}/../target/release -L ${ROOT_DIR}/../target/release -Wl,-rpath,${ROOT_DIR}/../target/debug -L ${ROOT_DIR}/../target/debug
 
 LIBS1 = $(LIBS) -lspinlock
-LIBS2 = $(LIBS) -llocklinkedlist -lspinlock
-LIBS3 = $(LIBS) -llockfreehashmap -llockfreelinkedlist
+LIBS2 = $(LIBS) -llocklinkedlist
+LIBS3 = $(LIBS) -llockfreelinkedlist
+LIBS4 = $(LIBS) -lhashmap
 
-all: $(PROG1) $(PROG2) #$(PROG3) $(PROG4) $(PROG5)
+all: $(PROG1) $(PROG2) $(PROG3) $(PROG4) $(PROG5)
+
+#check: $(TEST1) $(TEST2) $(TEST3) $(TEST4) $(TEST5)
+#	$(PYTHON3) ${ROOT_DIR}/test_mutual_exclusion.py
+#	$(PYTHON3) ${ROOT_DIR}/test_locklinkedlist.py
+#	$(PYTHON3) ${ROOT_DIR}/test_lockhashmap.py
+#	$(PYTHON3) ${ROOT_DIR}/test_lockfreehashmap.py
 
 check: $(PROG1) $(PROG2) $(PROG3) $(PROG4) $(PROG5)
 	$(PYTHON3) ${ROOT_DIR}/test_mutual_exclusion.py
+	$(PYTHON3) ${ROOT_DIR}/test_locklinkedlist.py
 	$(PYTHON3) ${ROOT_DIR}/test_lockhashmap.py
 	$(PYTHON3) ${ROOT_DIR}/test_lockfreehashmap.py
+
+SRCS = \
+	${ROOT_DIR}/thread.c \
+    #${ROOT_DIR}/hashmap-driver.c \
 
 $(PROG1): ${ROOT_DIR}/test_mutual_exclusion.c
 	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $< $(LIBS1)
 
-SRCS = \
-        ${ROOT_DIR}/thread.c \
-		${ROOT_DIR}/test_locklinkedlist.c
-        #${ROOT_DIR}/hashmap-driver.c \
+$(PROG2): ${ROOT_DIR}/test_locklinkedlist.c
+	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $< $(LIBS1) $(LIBS2)
 
-$(PROG2): $(SRCS)
-	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $(SRCS) $(LIBS1) $(LIBS2)
+$(PROG3): ${ROOT_DIR}/test_lockfreelinkedlist.c
+	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $< $(LIBS3)
 
-$(PROG3): $(SRCS)
-	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $(SRCS) $(LIBS3)
+$(PROG4): $(ROOT_DIR)/test_lockhashmap.c $(SRCS)
+	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $< $(SRCS) $(LIBS1) $(LIBS2) $(LIBS4)
 
-$(PROG4): ${ROOT_DIR}/test_cleanup.c
-	$(CC) $(CFLAGS) -Og -g -o $@ $< $(LIBS2)
-
-$(PROG5): ${ROOT_DIR}/test_cleanup.c
-	$(CC) $(CFLAGS) -Og -g -o $@ $< $(LIBS3)
+$(PROG5): ${ROOT_DIR}/test_lockfreehashmap.c $(SRCS)
+	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $< $(SRCS) $(LIBS3) $(LIBS4)
 
 clean:
-	$(RM) $(OBJS) $(PROG1) $(PROG2) $(PROG3) $(PROG4) $(PROG5)
+	$(RM) $(OBJS) $(PROG1) $(PROG2) $(PROG3) $(PROG4)
