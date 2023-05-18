@@ -91,6 +91,25 @@ def main() -> None:
         if f1 < 1.4 or f2 < 1.4:
             warn("Hashmap is not scaling properly: " + str(times))
             exit(1)
+        with subtest("Checking if hashmap cleans up items when removing"):
+            test_cleanup_lock = test_root().joinpath("test_cleanup_lock")
+
+            if not test_cleanup_lock.exists():
+                run(["make", "-C", str(test_root()), str(test_cleanup_lock)])
+
+            with open(f"{tmpdir}/stdout", "w+") as stdout:
+                run_project_executable(str(test_cleanup_lock), stdout=stdout)
+
+                stdout.seek(0)
+                lines = stdout.readlines()
+                first = float(lines[0])
+                second = float(lines[1])
+
+                if second / first > 1.5:
+                    warn(
+                        f"Hashmap does not cleanup properly when removing items: {first}, {second}"
+                    )
+                    exit(1)
 
 
 if __name__ == "__main__":

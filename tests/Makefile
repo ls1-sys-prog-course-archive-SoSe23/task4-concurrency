@@ -12,8 +12,8 @@ PROG2 := ${ROOT_DIR}/test_locklinkedlist
 PROG3 := ${ROOT_DIR}/test_lockfreelinkedlist
 PROG4 := ${ROOT_DIR}/test_lockhashmap
 PROG5 := ${ROOT_DIR}/test_lockfreehashmap
-#PROG5 := ${ROOT_DIR}/test_cleanup_lock
-#PROG6 := ${ROOT_DIR}/test_cleanup_lockfree
+PROG6 := ${ROOT_DIR}/test_cleanup_lock
+PROG7 := ${ROOT_DIR}/test_cleanup_lockfree
 
 OBJS := ${SRCS:.c=.so}
 
@@ -24,7 +24,7 @@ LIBS2 = $(LIBS) -llocklinkedlist
 LIBS3 = $(LIBS) -llockfreelinkedlist
 LIBS4 = $(LIBS) -lhashmap
 
-all: $(PROG1) $(PROG2) $(PROG3) $(PROG4) $(PROG5)
+all: $(PROG1) $(PROG2) $(PROG3) $(PROG4) $(PROG5) $(PROG6) $(PROG7)
 
 #check: $(TEST1) $(TEST2) $(TEST3) $(TEST4) $(TEST5)
 #	$(PYTHON3) ${ROOT_DIR}/test_mutual_exclusion.py
@@ -57,5 +57,11 @@ $(PROG4): $(ROOT_DIR)/test_lockhashmap.c $(SRCS)
 $(PROG5): ${ROOT_DIR}/test_lockfreehashmap.c $(SRCS)
 	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $< $(SRCS) $(LIBS3) $(LIBS4)
 
+$(PROG6): ${ROOT_DIR}/test_cleanup.c
+	$(CC) $(CFLAGS) -Og -g -o $@ $< $(LIBS1) $(LIBS2) $(LIBS4)
+
+$(PROG7): ${ROOT_DIR}/test_cleanup.c
+	$(CC) $(CFLAGS) -Og -g -o $@ $< $(LIBS3) $(LIBS4)
+
 clean:
-	$(RM) $(OBJS) $(PROG1) $(PROG2) $(PROG3) $(PROG4)
+	$(RM) $(OBJS) $(PROG1) $(PROG2) $(PROG3) $(PROG4) $(PROG5) $(PROG6) $(PROG7)
