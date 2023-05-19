@@ -22,7 +22,8 @@ LIBS = -Wl,-rpath,${ROOT_DIR}/.. -L ${ROOT_DIR}/.. -Wl,-rpath,${ROOT_DIR}/../tar
 LIBS1 = -lspinlock
 LIBS2 = -llocklinkedlist
 LIBS3 = -llockfreelinkedlist
-LIBS4 = -lhashmap
+LIBS4 = -llockhashmap
+LIBS5 = -llockfreehashmap
 
 all: $(PROG1) $(PROG2) $(PROG3) $(PROG4) $(PROG5) $(PROG6) $(PROG7)
 
@@ -56,13 +57,13 @@ $(PROG4): $(ROOT_DIR)/test_lockhashmap.c $(SRCS)
 	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $< $(SRCS) $(LIBS) $(LIBS1) $(LIBS2) $(LIBS4)
 
 $(PROG5): ${ROOT_DIR}/test_lockfreehashmap.c $(SRCS)
-	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $< $(SRCS) $(LIBS) $(LIBS3) $(LIBS4)
+	$(CC) $(CFLAGS) -Og -g -pthread -o $@ $< $(SRCS) $(LIBS) $(LIBS3) $(LIBS5)
 
 $(PROG6): ${ROOT_DIR}/test_cleanup.c
 	$(CC) $(CFLAGS) -Og -g -o $@ $< $(LIBS) $(LIBS1) $(LIBS2) $(LIBS4)
 
 $(PROG7): ${ROOT_DIR}/test_cleanup.c
-	$(CC) $(CFLAGS) -Og -g -o $@ $< $(LIBS) $(LIBS3) $(LIBS4)
+	$(CC) $(CFLAGS) -Og -g -o $@ $< $(LIBS) $(LIBS3) $(LIBS5)
 
 clean:
 	$(RM) $(OBJS) $(PROG1) $(PROG2) $(PROG3) $(PROG4) $(PROG5) $(PROG6) $(PROG7)
