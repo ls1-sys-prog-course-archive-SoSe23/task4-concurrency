@@ -19,21 +19,22 @@ RUSTFLAGS ?= -g
 #	cargo build
 
 # C/C++ example
-all: libspinlock.so liblocklinkedlist.so liblockfreelinkedlist.so libhashmap.so
+all: libspinlock.so liblocklinkedlist.so liblockfreelinkedlist.so liblockhashmap.so liblockfreehashmap.so
+
 libspinlock.so: spinlock.c
 	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
 
-libhashmap.so: hashmap.c
-	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
-
-liblocklinkedlist.so: locklinkedlist.c
-	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
+liblocklinkedlist.so: locklinkedlist.c spinlock.c
+	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $< spinlock.c
 
 liblockfreelinkedlist.so: lockfreelinkedlist.c
 	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
 
-#liblockfreehashmap.so: lockfreehashmap.c
-#	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $<
+liblockhashmap.so: hashmap.c locklinkedlist.c spinlock.c
+	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $< locklinkedlist.c spinlock.c
+
+liblockfreehashmap.so: hashmap.c lockfreelinkedlist.c
+	$(CC) $(CFLAGS) -shared -fPIC -ldl -o $@ $< lockfreelinkedlist.c
 
 # Usually there is no need to modify this
 check: all
