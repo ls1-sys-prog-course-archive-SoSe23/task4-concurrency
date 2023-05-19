@@ -19,7 +19,7 @@ def main() -> None:
     if not test_locklinkedlist.exists():
         run(["make", "-C", str(test_root()), str(test_locklinkedlist)])
 
-    with subtest("Checking lock linked list"):
+    with subtest("Checking lock free linked list"):
         run_project_executable(str(test_locklinkedlist))
 
 
