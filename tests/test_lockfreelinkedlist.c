@@ -93,7 +93,7 @@ int main()
 
     for (int i = 0; i < all_nodes; i++)
     {
-        if(!lookup_val(list, i))
+        if(lookup_val(list, i))
         {
             printf("Error: node %d was not added to the list\n", i);
             exit(1);
