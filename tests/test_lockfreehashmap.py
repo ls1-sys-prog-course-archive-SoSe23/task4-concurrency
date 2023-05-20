@@ -25,6 +25,10 @@ def sanity_check(output, n_buckets, initial, n_threads):
 
 def main() -> None:
     # Run the test program
+
+    lib = ensure_library("liblockfreehashmap.so")
+    extra_env = {"LD_LIBRARY_PATH": str(os.path.dirname(lib))}
+
     test_lock_hashmap = test_root().joinpath("test_lockfreehashmap")
     if not test_lock_hashmap.exists():
         run(["make", "-C", str(test_root()), str(test_lock_hashmap)])
@@ -36,6 +40,7 @@ def main() -> None:
                     str(test_lock_hashmap),
                     args=["-d20000", "-i10000", "-n4", "-r10000", "-u100", "-b1"],
                     stdout=stdout,
+                    extra_env=extra_env,
                 )
                 output = open(f"{tmpdir}/stdout").readlines()
                 sanity_check(output[1:], 1, 10000, 4)
