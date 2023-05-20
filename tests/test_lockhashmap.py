@@ -26,7 +26,7 @@ def sanity_check(output, n_buckets, initial, n_threads):
 def main() -> None:
     # Run the test program
     # lib = ensure_library("liblockhashmap.so")
-    lib = ensure_library("libhashmap.so")
+    lib = ensure_library("liblockhashmap.so")
 
     extra_env = {"LD_LIBRARY_PATH": str(os.path.dirname(lib))}
     test_lock_hashmap = test_root().joinpath("test_lockhashmap")
