@@ -16,7 +16,10 @@ RUSTFLAGS ?= -g
 
 ## Rust Example
 #all:
-#	cargo build
+#	cargo build --release
+#	mv target/release/libhashmap.so target/release/liblockhashmap.so
+#	cargo build --release -p hashmap --no-default-features --features lockfree
+#	mv target/release/libhashmap.so target/release/liblockfreehashmap.so
 
 # C/C++ example
 all: libspinlock.so liblocklinkedlist.so liblockfreelinkedlist.so liblockhashmap.so liblockfreehashmap.so

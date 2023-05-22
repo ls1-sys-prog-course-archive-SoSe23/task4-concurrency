@@ -1,10 +1,15 @@
 #[allow(non_camel_case_types)]
 pub struct cspinlock_t {}
 
-
 /// acquire the lock
 #[no_mangle]
 pub extern "C" fn cspin_lock(raw_lock: *mut cspinlock_t) -> libc::c_int {
+    return 1;
+}
+
+/// if the lock can not be acquired, return immediately
+#[no_mangle]
+pub extern "C" fn cspin_trylock(raw_lock: *mut cspinlock_t) -> libc::c_int {
     return 1;
 }
 

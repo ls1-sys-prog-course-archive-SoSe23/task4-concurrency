@@ -1,0 +1,17 @@
+[package]
+name = "hashmap"
+version = "0.0.1"
+edition = "2018"
+
+[lib]
+crate_type = ["cdylib", "lib"]
+
+[dependencies]
+libc = "0.2.94"
+lockfreelinkedlist = { path = "../lockfreelinkedlist", optional = true }
+locklinkedlist = { path = "../locklinkedlist", optional = true }
+
+[features]
+default = [ "lock" ]
+lock = [ "dep:locklinkedlist" ]
+lockfree = [ "dep:lockfreelinkedlist" ]
