@@ -1,3 +1,8 @@
+#[cfg(feature = "lockfree")]
+use lockfreelinkedlist as linkedlist;
+#[cfg(feature = "lock")]
+use locklinkedlist as linkedlist;
+
 pub struct HM {}
 
 /// allocate a hashmap with given number of buckets
@@ -25,7 +30,7 @@ pub extern "C" fn remove_item(hm: *mut HM, val: libc::c_long) -> libc::c_int {
 ///check if val exists in hm, return 0 if found
 #[no_mangle]
 pub extern "C" fn lookup_item(hm: *mut HM, val: libc::c_long) -> libc::c_int {
-    return 1
+    return 1;
 }
 
 ///print all elements in the hashmap as follows:

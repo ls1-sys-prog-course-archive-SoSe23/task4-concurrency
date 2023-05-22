@@ -1,2 +1,2 @@
 [workspace]
-members = [ "cspinlock", "lockhashmap", "lockfreehashmap" ]
+members = [ "spinlock", "locklinkedlist", "lockfreelinkedlist", "hashmap" ]
