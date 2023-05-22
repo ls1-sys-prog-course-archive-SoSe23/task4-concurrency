@@ -108,6 +108,12 @@ int main()
         pthread_create(&threads[i], NULL, thread_func_removes, (void*) args);
     }
 
+    // Wait for the threads to finish
+    for (int i = 0; i < NUM_THREADS; i++)
+    {
+        pthread_join(threads[i], NULL);
+    }
+
     // Free the linked list
     free_list(list);
 
