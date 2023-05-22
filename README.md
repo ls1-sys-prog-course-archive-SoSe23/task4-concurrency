@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/GUEdkqaQ)
 # Concurrent Programming
 
 This week you will implement a simple locking construct by relying only on primitive atomic operations. You will also implement a scalable, thread-safe concurrent data-structure. This will be achieved by following two different paths:
@@ -9,7 +10,7 @@ This week you will implement a simple locking construct by relying only on primi
 1. Implement the spinlock that is declared in `spinlock.h`. The file `spinlock.c` will be used to generate the library `libspinlock.so`.
 2. Implement a lock-based linked list that is declared in `linkedlist.h`. The file `locklinkedlist.c` will be used to generate the library `liblocklinkedlist.so`.
 3. Implement a lock free linked list also declared in `linkedlist.h`. The file `lockfreelinkedlist.c` will be used to generate the library `liblockfreelinkedlist.so`.
-4. Implement an hashmap that is declared in `hashmap.h`.  The file `hashmap.c` will be used to generate the library `liblockhashmap.so`.
+4. Implement an hashmap that is declared in `hashmap.h`.  The file `hashmap.c` will be used to generate the librares `liblockhashmap.so` and `liblockfreehashmap.so`.
 
 **NB:** For task 1, only atomic primitives (e.g., compare-and-swap, atomic fetch-and-increment, etc.) are allowed. No synchronization library can be used (on Rust you can use `std::sync::atomic`).
 
@@ -35,17 +36,17 @@ There are four tests that needs to be passed to complete this task successfully.
 ### Lock-based Linked List
 `test_locklinkedlist.py` expects `liblocklinkedlist.so` and checks for the following:
 1. the concurrent linked list is implemented correctly
-2. the linked list scales with increasing number of threads
+2. the linked list scales with an increasing number of threads
 
 ### Lock free Linked List
 `test_lockfreelinkedlist.py` expects `liblockfreelinkedlist.so` and checks for the following:
 1. the concurrent linked list is implemented correctly
-2. the linked list scales with increasing number of threads
+2. the linked list scales with an increasing number of threads
 
 ### Lock-based Hashmap
 `test_lockhashmap.py` expects `liblockhashmap.so` and checks for the following:
 1. the concurrent hashmap is implemented correctly
-2. the hashmap scales with increasing number of threads in high contention workloads.
+2. the hashmap scales with an increasing number of threads in high contention workloads.
 
 ### Lock free Hashmap
 `test_lockfreehashmap.py` expects `liblockfreehashmap.so`
