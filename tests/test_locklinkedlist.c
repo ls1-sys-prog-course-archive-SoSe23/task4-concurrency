@@ -46,7 +46,6 @@ void* thread_func_inserts(struct thread_args* args)
     for (int i = start_node; i < end_node; i++)
     {
         insert_val(list, i);
-        //insert sleep here?
         sleep(0.01);
     }
     return NULL;
@@ -87,8 +86,6 @@ int main()
         pthread_join(threads[i], NULL);
     }
 
-    //print_list(list);
-
     //Check that all nodes were added to the list
     int all_nodes = NUM_NODES*NUM_THREADS;
 
@@ -116,7 +113,7 @@ int main()
     }
 
     // Free the linked list
-    free_list(list);
+    //free_list(list);
 
     //printf("Test passed\n");
     return 0;
