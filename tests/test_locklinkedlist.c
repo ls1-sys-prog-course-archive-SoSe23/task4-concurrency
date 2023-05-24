@@ -60,10 +60,14 @@ void* thread_func_removes(struct thread_args* args)
     
     for (int i = start_node; i < end_node; i++)
     {
-        remove_val(list, i);
+        if(remove_val(list, i))
+        {
+            printf("Error: node %d coud not be removed from the list\n", i);
+            exit(1);
+        }
     }
 
-    return NULL;
+    return;
 }
 
 int main()
@@ -112,9 +116,19 @@ int main()
         pthread_join(threads[i], NULL);
     }
 
-    // Free the linked list
-    //free_list(list);
+    //Check that all nodes were removed from the list
+    for (int i = 0; i < all_nodes; i++)
+    {
+        if(!lookup_val(list, i))
+        {
+            printf("Error: node %d was not removed to the list\n", i);
+            exit(1);
+        }
+    }
 
-    //printf("Test passed\n");
+    // Free the linked list
+    free_list(list);
+
+    printf("Test passed\n");
     return 0;
 }
