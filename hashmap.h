@@ -70,7 +70,7 @@ int insert_item(HM* hm, long val);
 //return 1 if item is not found
 int remove_item(HM* hm, long val);
 
-//check if val exists in hm, return 1 if found, return 0 otherwise
+//check if val exists in hm, return 0 if found, return 1 otherwise
 int lookup_item(HM* hm, long val);
 
 //print all elements in the hashmap as follows:
