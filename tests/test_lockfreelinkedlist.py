@@ -15,12 +15,21 @@ from testsupport import (
 
 def main() -> None:
     # Run the test program
-    test_locklinkedlist = test_root().joinpath("test_lockfreelinkedlist")
-    if not test_locklinkedlist.exists():
-        run(["make", "-C", str(test_root()), str(test_locklinkedlist)])
+    lib = ensure_library("liblockfreelinkedlist.so")
+    extra_env = {"LD_LIBRARY_PATH": str(os.path.dirname(lib))}
+    test_lockfreelinkedlist = test_root().joinpath("test_lockfreelinkedlist")
 
-    with subtest("Checking lock free linked list"):
-        run_project_executable(str(test_locklinkedlist))
+    if not test_lockfreelinkedlist.exists():
+        run(["make", "-C", str(test_root()), str(test_lockfreelinkedlist)])
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        with subtest("Checking lock free linked list"):
+            with open(f"{tmpdir}/stdout", "w+") as stdout:
+                run_project_executable(
+                    str(test_lockfreelinkedlist),
+                    stdout=stdout,
+                    extra_env=extra_env,
+                )
 
 
 if __name__ == "__main__":
